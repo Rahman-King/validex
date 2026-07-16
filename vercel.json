@@ -2,20 +2,6 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "env": {
-    "FIREWORKS_API_KEY": "@fireworks-api-key",
-    "FIREWORKS_BASE_URL": "https://api.fireworks.ai/inference/v1",
-    "ALLOWED_MODELS": "accounts/fireworks/models/minimax-m3,accounts/fireworks/models/llama-v3-8b-instruct,accounts/fireworks/models/mistral-7b-instruct-4k,accounts/fireworks/models/gemma-7b-it,accounts/fireworks/models/qwen-7b-chat,accounts/fireworks/models/phi-3-mini-128k-instruct,accounts/fireworks/models/kimi-k2p6,accounts/fireworks/models/llama-v3-70b-instruct,accounts/fireworks/models/mixtral-8x7b-instruct,accounts/fireworks/models/deepseek-ai/deepseek-r1,accounts/fireworks/models/qwen-72b-chat,accounts/fireworks/models/codestral-22b-v0.1,accounts/fireworks/models/gemma-2-27b-it",
-    "GEMINI_API_KEY": "@gemini-api-key",
-    "OLLAMA_BASE_URL": "http://localhost:11434",
-    "OLLAMA_ROUTER": "qwen-router",
-    "OLLAMA_ROUTER_TIMEOUT_MS": "5000",
-    "OLL_SYNTHESIS_MODEL": "llama3:8b",
-    "BOHR_SERVICE_URL": "@bohr-service-url",
-    "BOHR_ACCESS_KEY": "@bohr-access-key",
-    "BOHR_APP_KEY": "@bohr-app-key",
-    "NODE_ENV": "production"
-  },
   "build": {
     "env": {
       "NEXT_PUBLIC_APP_NAME": "Validex"
