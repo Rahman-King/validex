@@ -1,10 +1,10 @@
 import {
-  BarChart3,
-  Compass,
-  FolderTree,
-  MessageSquare,
   ShieldCheck,
-  Timer,
+  CheckCircle,
+  BarChart3,
+  Lock,
+  Zap,
+  FileCheck,
   type LucideIcon,
 } from "lucide-react"
 import { Reveal } from "@/components/motion/reveal"
@@ -17,67 +17,67 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    icon: Compass,
-    title: "Smart model routing",
+    icon: FileCheck,
+    title: "Structural validation",
     description:
-      "Every prompt is analyzed and routed to the ideal model for the job — automatically.",
+      "Schema validation, type checking, and constraint enforcement ensure data integrity.",
   },
   {
-    icon: MessageSquare,
-    title: "Beautiful chat",
+    icon: CheckCircle,
+    title: "Content analysis",
     description:
-      "A focused, delightful chat surface with a floating prompt bar built for flow.",
+      "LLM-powered fact-checking, PII detection, bias and hallucination identification.",
   },
   {
     icon: BarChart3,
-    title: "Live analytics",
+    title: "Anomaly detection",
     description:
-      "Track tokens, cost, latency and confidence across every conversation.",
-  },
-  {
-    icon: FolderTree,
-    title: "Projects & memory",
-    description:
-      "Organize work into projects with persistent context and memory.",
-  },
-  {
-    icon: Timer,
-    title: "Real-time insight",
-    description:
-      "See the routing decision, model used and cost of each response instantly.",
+      "Statistical outlier detection and consistency checks identify data anomalies.",
   },
   {
     icon: ShieldCheck,
-    title: "Secure by default",
+    title: "Three-stage pipeline",
     description:
-      "Full authentication, protected workspaces and private user profiles.",
+      "Comprehensive verification through structural, content, and anomaly stages.",
+  },
+  {
+    icon: Zap,
+    title: "Real-time verification",
+    description:
+      "Instant feedback with detailed reports and actionable recommendations.",
+  },
+  {
+    icon: Lock,
+    title: "Secure & private",
+    description:
+      "Enterprise-grade security with full data protection and privacy controls.",
   },
 ]
 
 export function Features() {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-      <Reveal className="mx-auto max-w-2xl text-center">
-        <h2 className="font-display text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-          Built for a premium AI workflow
+    <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32">
+      <Reveal className="mx-auto max-w-3xl text-center">
+        <h2 className="font-display text-4xl font-bold tracking-tight text-balance sm:text-5xl">
+          Professional data verification
         </h2>
-        <p className="mt-4 text-lg leading-relaxed text-muted-foreground text-pretty">
-          Everything you need to think, build and ship with AI — beautifully.
+        <p className="mt-6 text-xl leading-relaxed text-muted-foreground text-pretty font-light">
+          Three-stage validation pipeline for enterprise data quality assurance.
         </p>
       </Reveal>
 
-      <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {features.map(({ icon: Icon, title, description }, i) => (
           <Reveal
             key={title}
-            delay={0.06 * i}
-            className="glass sheen lift group rounded-3xl p-6 hover:shadow-glow-sm"
+            delay={0.08 * i}
+            className="group p-8 hover:shadow-glow-sm transition-shadow duration-500"
           >
-            <div className="bg-gradient-brand mb-5 inline-flex size-12 items-center justify-center rounded-2xl text-white shadow-glow-sm transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110 group-hover:rotate-3">
-              <Icon className="size-6" />
+            <div className="bg-foreground mb-6 inline-flex size-14 items-center justify-center rounded-2xl text-background transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-110">
+              <Icon className="size-7" />
             </div>
-            <h3 className="font-display text-lg font-semibold">{title}</h3>
-            <p className="mt-2 leading-relaxed text-muted-foreground">
+            <h3 className="font-display text-xl font-semibold">{title}</h3>
+            <p className="mt-3 leading-relaxed text-muted-foreground font-light">
               {description}
             </p>
           </Reveal>

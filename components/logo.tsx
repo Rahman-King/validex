@@ -24,19 +24,16 @@ export function Logo({
   const content = (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <div className="relative shrink-0">
-        <Image
-          src="/routemind-logo.png"
-          alt="RouteMind logo"
-          width={icon}
-          height={icon}
-          priority
-          className="dark:drop-shadow-[0_4px_12px_color-mix(in_srgb,var(--brand-violet)_55%,transparent)] drop-shadow-[0_2px_8px_color-mix(in_srgb,var(--brand-violet)_30%,transparent)] transition-all duration-300"
-        />
+        <div className="flex size-8 items-center justify-center rounded-lg bg-foreground text-background">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="size-5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
       </div>
       {!iconOnly && (
         <span className={cn("font-display font-bold tracking-tight", text)}>
-          <span className="text-foreground">Route</span>
-          <span className="text-gradient-brand">Mind</span>
+          <span className="text-foreground">Valid</span>
+          <span className="text-foreground/70">ex</span>
         </span>
       )}
     </span>
@@ -44,7 +41,7 @@ export function Logo({
 
   if (href) {
     return (
-      <Link href={href} className="inline-flex" aria-label="RouteMind home">
+      <Link href={href} className="inline-flex" aria-label="Validex home">
         {content}
       </Link>
     )

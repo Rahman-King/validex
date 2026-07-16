@@ -36,7 +36,7 @@ export const ROUTER_MODEL: ModelConfig = {
 }
 
 export const MODEL_REGISTRY: Record<1 | 2, ModelConfig[]> = {
-  // Tier 1: minimax-m3 via Fireworks — general cloud inference
+  // Tier 1: Cost-effective models via Fireworks — general cloud inference
   1: [
     {
       id: "accounts/fireworks/models/minimax-m3",
@@ -51,8 +51,73 @@ export const MODEL_REGISTRY: Record<1 | 2, ModelConfig[]> = {
       capabilities: ["chat", "summarization", "translation", "extraction", "classification", "lightweight-reasoning"],
       specialization: 'general',
     },
+    {
+      id: "accounts/fireworks/models/llama-v3-8b-instruct",
+      label: "Llama 3 8B Instruct",
+      tier: 1,
+      provider: 'fireworks',
+      purpose: "General-purpose inference: Chat, Summarization, Translation, Extraction, Classification",
+      inPerM: 0.10,
+      outPerM: 0.10,
+      estimatedLatency: 500,
+      maxTokens: 8192,
+      capabilities: ["chat", "summarization", "translation", "extraction", "classification"],
+      specialization: 'general',
+    },
+    {
+      id: "accounts/fireworks/models/mistral-7b-instruct-4k",
+      label: "Mistral 7B Instruct",
+      tier: 1,
+      provider: 'fireworks',
+      purpose: "General-purpose inference: Chat, Summarization, Translation, Extraction, Classification",
+      inPerM: 0.08,
+      outPerM: 0.08,
+      estimatedLatency: 450,
+      maxTokens: 4096,
+      capabilities: ["chat", "summarization", "translation", "extraction", "classification"],
+      specialization: 'general',
+    },
+    {
+      id: "accounts/fireworks/models/gemma-7b-it",
+      label: "Gemma 7B IT",
+      tier: 1,
+      provider: 'fireworks',
+      purpose: "General-purpose inference: Chat, Summarization, Translation, Extraction, Classification",
+      inPerM: 0.07,
+      outPerM: 0.07,
+      estimatedLatency: 400,
+      maxTokens: 8192,
+      capabilities: ["chat", "summarization", "translation", "extraction", "classification"],
+      specialization: 'general',
+    },
+    {
+      id: "accounts/fireworks/models/qwen-7b-chat",
+      label: "Qwen 7B Chat",
+      tier: 1,
+      provider: 'fireworks',
+      purpose: "General-purpose inference: Chat, Summarization, Translation, Extraction, Classification",
+      inPerM: 0.09,
+      outPerM: 0.09,
+      estimatedLatency: 480,
+      maxTokens: 8192,
+      capabilities: ["chat", "summarization", "translation", "extraction", "classification"],
+      specialization: 'general',
+    },
+    {
+      id: "accounts/fireworks/models/phi-3-mini-128k-instruct",
+      label: "Phi-3 Mini 128K",
+      tier: 1,
+      provider: 'fireworks',
+      purpose: "Long-context tasks: Document analysis, code review, large text processing",
+      inPerM: 0.12,
+      outPerM: 0.12,
+      estimatedLatency: 550,
+      maxTokens: 128000,
+      capabilities: ["chat", "summarization", "extraction", "long-context", "analysis"],
+      specialization: 'general',
+    },
   ],
-  // Tier 2: kimi-k2p6 via Fireworks — heavy reasoning
+  // Tier 2: High-performance models via Fireworks — heavy reasoning
   2: [
     {
       id: "accounts/fireworks/models/kimi-k2p6",
@@ -67,25 +132,141 @@ export const MODEL_REGISTRY: Record<1 | 2, ModelConfig[]> = {
       capabilities: ["reasoning", "coding", "analysis", "complex-tasks"],
       specialization: 'general',
     },
+    {
+      id: "accounts/fireworks/models/llama-v3-70b-instruct",
+      label: "Llama 3 70B Instruct",
+      tier: 2,
+      provider: 'fireworks',
+      purpose: "High-quality reasoning: Complex coding, expert analysis, deep multi-step reasoning",
+      inPerM: 0.70,
+      outPerM: 0.70,
+      estimatedLatency: 1500,
+      maxTokens: 8192,
+      capabilities: ["reasoning", "coding", "analysis", "complex-tasks"],
+      specialization: 'general',
+    },
+    {
+      id: "accounts/fireworks/models/mixtral-8x7b-instruct",
+      label: "Mixtral 8x7B Instruct",
+      tier: 2,
+      provider: 'fireworks',
+      purpose: "High-quality reasoning: Complex coding, expert analysis, multi-task processing",
+      inPerM: 0.40,
+      outPerM: 0.40,
+      estimatedLatency: 1000,
+      maxTokens: 32768,
+      capabilities: ["reasoning", "coding", "analysis", "complex-tasks"],
+      specialization: 'general',
+    },
+    {
+      id: "accounts/fireworks/models/deepseek-ai/deepseek-r1",
+      label: "DeepSeek R1",
+      tier: 2,
+      provider: 'fireworks',
+      purpose: "Advanced reasoning: Mathematical reasoning, complex problem solving, research",
+      inPerM: 0.60,
+      outPerM: 0.60,
+      estimatedLatency: 1300,
+      maxTokens: 64000,
+      capabilities: ["reasoning", "math", "research", "complex-tasks"],
+      specialization: 'reasoning',
+    },
+    {
+      id: "accounts/fireworks/models/qwen-72b-chat",
+      label: "Qwen 72B Chat",
+      tier: 2,
+      provider: 'fireworks',
+      purpose: "High-quality reasoning: Complex coding, expert analysis, deep multi-step reasoning",
+      inPerM: 0.65,
+      outPerM: 0.65,
+      estimatedLatency: 1400,
+      maxTokens: 32768,
+      capabilities: ["reasoning", "coding", "analysis", "complex-tasks"],
+      specialization: 'general',
+    },
+    {
+      id: "accounts/fireworks/models/codestral-22b-v0.1",
+      label: "Codestral 22B",
+      tier: 2,
+      provider: 'fireworks',
+      purpose: "Specialized coding: Code generation, debugging, code review, technical documentation",
+      inPerM: 0.35,
+      outPerM: 0.35,
+      estimatedLatency: 900,
+      maxTokens: 32768,
+      capabilities: ["coding", "debugging", "code-review", "technical-writing"],
+      specialization: 'coding',
+    },
+    {
+      id: "accounts/fireworks/models/gemma-2-27b-it",
+      label: "Gemma 2 27B IT",
+      tier: 2,
+      provider: 'fireworks',
+      purpose: "High-quality reasoning: Complex tasks, analysis, multi-step reasoning",
+      inPerM: 0.45,
+      outPerM: 0.45,
+      estimatedLatency: 1100,
+      maxTokens: 8192,
+      capabilities: ["reasoning", "analysis", "complex-tasks"],
+      specialization: 'general',
+    },
   ],
 }
 
 /**
  * Get active model registry dynamically mapping ALLOWED_MODELS to avoid violations
+ * Now supports unlimited Fireworks models from environment variable
  */
 export function getActiveRegistry(): Record<1 | 2, ModelConfig[]> {
   const allowed = typeof process !== 'undefined' && process.env.ALLOWED_MODELS
     ? process.env.ALLOWED_MODELS.split(',').map(m => m.trim()).filter(Boolean)
     : []
+  
   if (allowed.length === 0) return MODEL_REGISTRY
 
-  // Dynamic mapping
-  const t1Id = allowed.find(m => m.includes('minimax') || m.includes('m3')) || allowed[0]
-  const t2Id = allowed.find(m => m.includes('kimi')) || allowed[Math.min(1, allowed.length - 1)]
+  // Dynamic mapping - use all allowed models intelligently
+  // Sort by model name length as heuristic for parameter count (shorter = smaller = cheaper)
+  const sortedModels = [...allowed].sort((a, b) => a.length - b.length)
+
+  // Tier 1: Use smallest/cheapest models for simple tasks
+  const tier1Models = sortedModels.slice(0, Math.max(1, Math.floor(sortedModels.length / 2)))
+  
+  // Tier 2: Use larger models for complex reasoning
+  const tier2Models = sortedModels.slice(Math.max(1, Math.floor(sortedModels.length / 2)))
+
+  // Create model configs for Tier 1
+  const tier1Configs: ModelConfig[] = tier1Models.map((id, index) => ({
+    id,
+    label: `Fireworks Model ${index + 1}`,
+    tier: 1,
+    provider: 'fireworks',
+    purpose: "General-purpose inference: Chat, Summarization, Translation, Extraction, Classification, Lightweight reasoning",
+    inPerM: 0.15, // Default cost estimate
+    outPerM: 0.15,
+    estimatedLatency: 600,
+    maxTokens: 8192,
+    capabilities: ["chat", "summarization", "translation", "extraction", "classification", "lightweight-reasoning"],
+    specialization: 'general',
+  }))
+
+  // Create model configs for Tier 2
+  const tier2Configs: ModelConfig[] = tier2Models.map((id, index) => ({
+    id,
+    label: `Fireworks Model ${tier1Models.length + index + 1}`,
+    tier: 2,
+    provider: 'fireworks',
+    purpose: "Higher-quality reasoning: Complex coding, expert analysis, deep multi-step reasoning",
+    inPerM: 0.50, // Default cost estimate
+    outPerM: 1.50,
+    estimatedLatency: 1200,
+    maxTokens: 16384,
+    capabilities: ["reasoning", "coding", "analysis", "complex-tasks"],
+    specialization: 'general',
+  }))
 
   return {
-    1: [{ ...MODEL_REGISTRY[1][0], id: t1Id, provider: 'fireworks' }],
-    2: [{ ...MODEL_REGISTRY[2][0], id: t2Id, provider: 'fireworks' }],
+    1: tier1Configs.length > 0 ? tier1Configs : MODEL_REGISTRY[1],
+    2: tier2Configs.length > 0 ? tier2Configs : MODEL_REGISTRY[2],
   }
 }
 

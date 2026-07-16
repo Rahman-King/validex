@@ -92,8 +92,8 @@ export const AIControls = React.memo(function AIControls({ config, onConfigChang
                   onClick={() => onConfigChange({ ...config, mode })}
                   className={`flex-1 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                     config.mode === mode
-                      ? "bg-gradient-brand text-white shadow-lg shadow-brand/20"
-                      : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                      ? "bg-foreground text-background shadow-md"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80"
                   }`}
                 >
                   {mode.charAt(0).toUpperCase() + mode.slice(1)}
@@ -113,10 +113,10 @@ export const AIControls = React.memo(function AIControls({ config, onConfigChang
                   disabled={config.mode === "automatic"}
                   className={`flex-1 rounded-lg px-2 py-1.5 text-xs font-medium transition-all ${
                     config.forceTier === tier
-                      ? "bg-gradient-brand text-white shadow-lg shadow-brand/20"
+                      ? "bg-foreground text-background shadow-md"
                       : config.mode === "automatic"
                       ? "bg-muted/30 text-muted-foreground/50 cursor-not-allowed"
-                      : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80"
                   }`}
                 >
                   {tier === "auto" ? "Auto" : tier.replace("tier", "T")}
@@ -133,10 +133,10 @@ export const AIControls = React.memo(function AIControls({ config, onConfigChang
                 <button
                   key={mode.id}
                   onClick={() => onConfigChange({ ...config, taskMode: mode.id as TaskMode })}
-                  className={`group relative flex flex-col items-center gap-1.5 rounded-xl px-3 py-3 transition-all duration-300 ${
+                  className={`group relative flex flex-col items-center gap-1.5 rounded-lg px-3 py-2.5 transition-all duration-300 ${
                     config.taskMode === mode.id
-                      ? "bg-gradient-to-br from-violet-500/20 to-purple-600/20 text-violet-700 dark:text-violet-300 shadow-lg shadow-violet-500/20 border border-violet-500/30 scale-105"
-                      : "bg-muted/40 text-muted-foreground hover:bg-muted/60 hover:scale-102 border border-transparent hover:border-border/50"
+                      ? "bg-foreground text-background shadow-md scale-105"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80 hover:scale-102 border border-transparent"
                   }`}
                 >
                   <span className={`text-2xl transition-transform duration-300 ${
@@ -145,8 +145,8 @@ export const AIControls = React.memo(function AIControls({ config, onConfigChang
                   <span className="text-[11px] font-medium">{mode.label}</span>
                   {config.taskMode === mode.id && (
                     <span className="absolute -top-1 -right-1 flex size-3">
-                      <span className="absolute inline-flex size-full animate-ping rounded-full bg-violet-400 opacity-75" />
-                      <span className="relative inline-flex size-3 rounded-full bg-violet-500" />
+                      <span className="absolute inline-flex size-full animate-ping rounded-full bg-foreground opacity-75" />
+                      <span className="relative inline-flex size-3 rounded-full bg-foreground" />
                     </span>
                   )}
                 </button>

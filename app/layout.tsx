@@ -21,15 +21,15 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'RouteMind — One workspace. Every model, routed.',
+  title: 'Validex — Intelligent Data Verification',
   description:
-    'RouteMind analyzes each prompt and routes it to the best AI model — then shows you exactly what happened. Chat, projects and analytics in one interface.',
+    'Validex provides three-stage data verification with structural validation, content analysis, and anomaly detection. Professional AI-powered data quality assurance.',
   generator: 'v0.app',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'RouteMind',
+    title: 'Validex',
   },
   icons: {
     icon: [
