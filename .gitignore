@@ -9,7 +9,6 @@ __v0_jsx-dev-runtime.ts
 # Environment variables - SECURITY: Never commit actual .env files
 .env
 .env*.local
-.env.example
 
 # Common ignores
 node_modules
@@ -39,4 +38,3 @@ pids
 *.swo
 *~
 .vercel
-.env*
