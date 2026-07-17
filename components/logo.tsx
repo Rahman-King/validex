@@ -24,7 +24,7 @@ export function Logo({
   const content = (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <div className="relative shrink-0">
-        <div className="flex size-8 items-center justify-center rounded-lg bg-foreground text-background">
+        <div className="flex size-8 items-center justify-center rounded-full bg-foreground text-background">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="size-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
