@@ -61,20 +61,61 @@ function parseQwenResponse(raw: string, originalPrompt: string): RouterDecision 
   let intent = 'general'
   let complexity = 30
   let confidence = 75
+  let selectedModel = 'accounts/fireworks/models/minimax-m3' // default
+
+  const lower = originalPrompt.toLowerCase()
+  const len = originalPrompt.length
+
+  // Task type detection for model selection
+  const isCoding = /(large repo|refactor|architect|codebase|monorepo|microservice|design pattern|system design|code|function|class|bug|debug|api|typescript|python|javascript|react|sql|regex|compile|algorithm)/i.test(lower)
+  const isMath = /(math|calculate|equation|formula|solve|compute|integral|derivative|algebra|geometry|statistics|probability)/i.test(lower)
+  const isCreative = /(write|story|poem|creative|imagine|fiction|narrative|tale)/i.test(lower)
+  const isSentiment = /(sentiment|emotion|feeling|mood|attitude|opinion|review)/i.test(lower)
+  const isExtraction = /(extract|parse|identify|recognize|entity|information|data)/i.test(lower)
+  const isLongContext = len > 1000 || /(document|article|paper|report|long text|large content)/i.test(lower)
 
   if (normalized.includes('tier 2') || normalized.includes('tier2')) {
     selectedTier = 2
     intent = 'complex'
     complexity = 70
     confidence = 85
+    
+    // Select specialized Tier 2 model
+    if (isCoding) {
+      selectedModel = 'accounts/fireworks/models/codestral-22b-v0.1'
+      intent = 'coding'
+    } else if (isMath) {
+      selectedModel = 'accounts/fireworks/models/deepseek-ai/deepseek-r1'
+      intent = 'math'
+    } else {
+      selectedModel = 'accounts/fireworks/models/kimi-k2p6'
+    }
   } else if (normalized.includes('tier 1') || normalized.includes('tier1')) {
     selectedTier = 1
     intent = 'general'
     complexity = 25
     confidence = 80
+    
+    // Select specialized Tier 1 model
+    if (isCreative) {
+      selectedModel = 'accounts/fireworks/models/qwen-7b-chat'
+      intent = 'creative'
+    } else if (isSentiment) {
+      selectedModel = 'accounts/fireworks/models/gemma-7b-it'
+      intent = 'sentiment'
+    } else if (isExtraction) {
+      selectedModel = 'accounts/fireworks/models/mistral-7b-instruct-4k'
+      intent = 'extraction'
+    } else if (isLongContext) {
+      selectedModel = 'accounts/fireworks/models/phi-3-mini-128k-instruct'
+      intent = 'long-context'
+    } else {
+      selectedModel = 'accounts/fireworks/models/llama-v3-8b-instruct'
+    }
   } else {
     // Fallback if output doesn't match expected format
     console.warn('[QwenRouter] Unexpected output format, defaulting to Tier 1')
+    selectedModel = 'accounts/fireworks/models/llama-v3-8b-instruct'
   }
 
   const predictedTokens  = estimateTokens(originalPrompt, selectedTier)
@@ -91,9 +132,10 @@ function parseQwenResponse(raw: string, originalPrompt: string): RouterDecision 
     predictedLatency,
     economyScore: calculateEconomyScore(predictedCost, predictedLatency, selectedTier),
     selectedTier,
+    selectedModel,
     skippedTiers,
-    explanation: `qwen-router (Ollama) → Tier ${selectedTier}`,
-    reasoning: `Direct tier selection from qwen-router`,
+    explanation: `qwen-router (Ollama) → Tier ${selectedTier} → ${selectedModel}`,
+    reasoning: `Direct tier selection from qwen-router with model specialization`,
   }
 }
 

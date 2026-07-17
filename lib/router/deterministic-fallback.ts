@@ -2,7 +2,7 @@
  * Deterministic Routing Fallback
  * Pure regex/heuristic routing — zero latency, zero cost, zero dependencies.
  * Used when QwenRouter (Ollama) is unavailable or times out.
- * Extracted from the legacy FireworksRouter.fallbackRouting().
+ * Now includes model selection based on task specializations.
  */
 
 export interface RouterDecision {
@@ -14,6 +14,7 @@ export interface RouterDecision {
   predictedLatency: number
   economyScore: number     // 0-100
   selectedTier: 1 | 2
+  selectedModel: string     // Model ID based on specialization
   skippedTiers: number[]
   explanation: string
   reasoning: string
@@ -69,6 +70,7 @@ export function calculateEconomyScore(
 /**
  * Pure heuristic routing — called when Qwen is unavailable.
  * Returns a RouterDecision with confidence capped at 72 to signal uncertainty.
+ * Now includes model selection based on task type.
  */
 export function deterministicFallback(
   prompt: string,
@@ -81,15 +83,29 @@ export function deterministicFallback(
   let intent = 'general'
   let complexity = 15
   let confidence = 65 // capped — we're not sure
+  let selectedModel = 'accounts/fireworks/models/minimax-m3' // default
+
+  // Task type detection for model selection
+  const isCoding = /(large repo|refactor|architect|codebase|monorepo|microservice|design pattern|system design|code|function|class|bug|debug|api|typescript|python|javascript|react|sql|regex|compile|algorithm)/i.test(lower)
+  const isMath = /(math|calculate|equation|formula|solve|compute|integral|derivative|algebra|geometry|statistics|probability)/i.test(lower)
+  const isCreative = /(write|story|poem|creative|imagine|fiction|narrative|tale)/i.test(lower)
+  const isSentiment = /(sentiment|emotion|feeling|mood|attitude|opinion|review)/i.test(lower)
+  const isExtraction = /(extract|parse|identify|recognize|entity|information|data)/i.test(lower)
+  const isLongContext = len > 1000 || /(document|article|paper|report|long text|large content)/i.test(lower)
 
   // Tier 2: expert coding tasks / complex reasoning
-  if (
-    /(large repo|refactor|architect|codebase|monorepo|microservice|design pattern|system design|code|function|class|bug|debug|api|typescript|python|javascript|react|sql|regex|compile|algorithm)/i.test(lower)
-  ) {
+  if (isCoding) {
     selectedTier = 2
     intent = 'coding'
     complexity = 75
     confidence = 72
+    selectedModel = 'accounts/fireworks/models/codestral-22b-v0.1' // Coding specialist
+  } else if (isMath) {
+    selectedTier = 2
+    intent = 'math'
+    complexity = 80
+    confidence = 72
+    selectedModel = 'accounts/fireworks/models/deepseek-ai/deepseek-r1' // Math specialist
   } else if (
     /(explain|why|analyze|strategy|reason|compare|plan|design|evaluate|critique)/i.test(lower) ||
     len > 300
@@ -98,6 +114,33 @@ export function deterministicFallback(
     intent = 'reasoning'
     complexity = 55
     confidence = 70
+    selectedModel = 'accounts/fireworks/models/kimi-k2p6' // Complex reasoning specialist
+  }
+  // Tier 1: specialized tasks
+  else if (isCreative) {
+    selectedTier = 1
+    intent = 'creative'
+    complexity = 35
+    confidence = 68
+    selectedModel = 'accounts/fireworks/models/qwen-7b-chat' // Creative writing specialist
+  } else if (isSentiment) {
+    selectedTier = 1
+    intent = 'sentiment'
+    complexity = 25
+    confidence = 68
+    selectedModel = 'accounts/fireworks/models/gemma-7b-it' // Sentiment analysis specialist
+  } else if (isExtraction) {
+    selectedTier = 1
+    intent = 'extraction'
+    complexity = 30
+    confidence = 68
+    selectedModel = 'accounts/fireworks/models/mistral-7b-instruct-4k' // Extraction specialist
+  } else if (isLongContext) {
+    selectedTier = 1
+    intent = 'long-context'
+    complexity = 40
+    confidence = 68
+    selectedModel = 'accounts/fireworks/models/phi-3-mini-128k-instruct' // Long-context specialist
   }
   // Tier 1: simple tasks — everything else (greetings, basic questions, short queries)
   else {
@@ -105,6 +148,7 @@ export function deterministicFallback(
     intent = category || 'general'
     complexity = 18
     confidence = 65
+    selectedModel = 'accounts/fireworks/models/llama-v3-8b-instruct' // General purpose
   }
 
   const predictedTokens = estimateTokens(prompt, selectedTier)
@@ -121,8 +165,9 @@ export function deterministicFallback(
     predictedLatency,
     economyScore: calculateEconomyScore(predictedCost, predictedLatency, selectedTier),
     selectedTier,
+    selectedModel,
     skippedTiers,
-    explanation: `Heuristic fallback → Tier ${selectedTier} (${intent}, complexity ${complexity}/100)`,
+    explanation: `Heuristic fallback → Tier ${selectedTier} (${intent}, complexity ${complexity}/100) → ${selectedModel}`,
     reasoning: 'Deterministic fallback: Qwen router unavailable',
   }
 }
