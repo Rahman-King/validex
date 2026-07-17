@@ -48,6 +48,31 @@ export async function POST(request: NextRequest) {
       data,
       taskMode,
       enableOnlineResearch: false, // Disabled by default for output verification
+      config: {
+        content: {
+          checkPII: true,
+          checkBias: true,
+          checkHallucinations: true,
+          checkFacts: false,
+          enableSuggestionSystem: false, // Disabled by default to avoid Ollama dependency
+          enableBohrVerification: false, // Disabled by default to avoid Bohr dependency
+          factCheckSources: [],
+          biasThreshold: 0.7,
+          hallucinationThreshold: 0.6
+        },
+        structural: {
+          requiredFields: [],
+          fieldTypes: {},
+          fieldConstraints: {}
+        },
+        anomaly: {
+          enableOutlierDetection: false,
+          enableConsistencyChecks: false,
+          outlierThreshold: 2,
+          consistencyRules: []
+        },
+        enabledStages: ["structural", "content", "anomaly"]
+      }
     }
 
     // Run verification pipeline
