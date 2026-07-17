@@ -53,9 +53,9 @@ export async function POST(request: NextRequest) {
           checkPII: true,
           checkBias: true,
           checkHallucinations: true,
-          checkFacts: false,
-          enableSuggestionSystem: false, // Disabled by default to avoid Ollama dependency
-          enableBohrVerification: false, // Disabled by default to avoid Bohr dependency
+          checkFacts: true,
+          enableSuggestionSystem: true, // Enabled - has fallback to majority voting if Ollama unavailable
+          enableBohrVerification: false, // Disabled to avoid Bohr dependency
           factCheckSources: [],
           biasThreshold: 0.7,
           hallucinationThreshold: 0.6
