@@ -10,6 +10,14 @@ export function SiteHeader() {
         <Logo href="/" />
         <nav className="flex items-center gap-2">
           <Button
+            variant="ghost"
+            nativeButton={false}
+            className="rounded-full px-4"
+            render={<Link href="/optimize" />}
+          >
+            Optimize
+          </Button>
+          <Button
             variant="hero"
             nativeButton={false}
             className="press group rounded-full px-4 transition-shadow hover:shadow-glow-sm"
