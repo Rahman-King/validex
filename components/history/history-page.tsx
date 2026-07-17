@@ -243,7 +243,7 @@ export function HistoryPage() {
           {!searchQuery && (
             <Link
               href="/chat"
-              className="mt-5 inline-flex items-center justify-center rounded-xl bg-brand-violet px-4 py-2 text-sm font-semibold text-white shadow-glow hover:shadow-glow-md hover:bg-brand-violet/90 transition-all"
+              className="mt-5 inline-flex items-center justify-center rounded-xl bg-brand-violet px-4 py-2 text-sm font-semibold text-foreground shadow-glow hover:shadow-glow-md hover:bg-brand-violet/90 transition-all"
             >
               Start New Chat
             </Link>
