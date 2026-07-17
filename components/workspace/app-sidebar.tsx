@@ -147,7 +147,9 @@ export function AppSidebar() {
           <Avatar>
             {user?.avatarUrl ? (
               <AvatarImage src={user.avatarUrl} alt={user.name} />
-            ) : null}
+            ) : (
+              <AvatarImage src="/apple-icon.png" alt={user?.name || "User"} />
+            )}
             <AvatarFallback className="bg-gradient-brand text-xs font-semibold text-white">
               {initials(user?.name, user?.email)}
             </AvatarFallback>
