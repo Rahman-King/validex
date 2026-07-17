@@ -5,12 +5,14 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import {
   BarChart3,
+  CheckCircle2,
   FolderTree,
   History,
   LogOut,
   MessageSquare,
   Plus,
   Settings,
+  Sparkles,
   Trash2,
 } from "lucide-react"
 import { toast } from "sonner"
@@ -36,6 +38,8 @@ import {
 
 const nav = [
   { label: "Chat", href: "/chat", icon: MessageSquare },
+  { label: "Optimize", href: "/optimize", icon: Sparkles },
+  { label: "Verify", href: "/verify-output", icon: CheckCircle2 },
   { label: "History", href: "/history", icon: History },
   { label: "Projects", href: "/projects", icon: FolderTree },
   { label: "Analytics", href: "/analytics", icon: BarChart3 },
