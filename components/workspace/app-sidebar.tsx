@@ -19,8 +19,6 @@ import { toast } from "sonner"
 import { useApp } from "@/components/app-provider"
 import { Logo } from "@/components/logo"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { initials } from "@/lib/format"
 import {
   Sidebar,
   SidebarContent,
@@ -144,16 +142,6 @@ export function AppSidebar() {
 
       <SidebarFooter className="p-3">
         <div className="flex items-center gap-2.5 rounded-xl p-1.5 group-data-[collapsible=icon]:p-0">
-          <Avatar>
-            {user?.avatarUrl ? (
-              <AvatarImage src={user.avatarUrl} alt={user.name} />
-            ) : (
-              <AvatarImage src="/apple-icon.png" alt={user?.name || "User"} />
-            )}
-            <AvatarFallback className="bg-gradient-brand text-xs font-semibold text-white">
-              {initials(user?.name, user?.email)}
-            </AvatarFallback>
-          </Avatar>
           <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
             <p className="truncate text-sm font-medium leading-tight">
               {user?.name}
