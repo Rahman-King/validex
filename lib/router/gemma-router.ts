@@ -30,12 +30,6 @@ const ROUTER_TIMEOUT  = parseInt(process.env.OLLAMA_ROUTER_TIMEOUT_MS || '1500',
 const ROUTER_ENABLED  = process.env.OLLAMA_ROUTER !== 'false'
 
 // ── System prompt ──────────────────────────────────────────────────────────
-// NOTE: "qwen-router"'s Modelfile now outputs plain text "tier 1" or "tier 2"
-// for speed. Parameters: temperature 0.1 / num_ctx 2048 / num_predict 1024 /
-// top_k 1 / top_p 1 (greedy decoding). We intentionally do NOT send a duplicate
-// `system` prompt at call time below — two different system prompts (Modelfile
-// vs. runtime) can conflict. This constant is kept only as documentation of the
-// old JSON schema for deterministic fallback reference.
 const ROUTER_SYSTEM_PROMPT = `You are RouteMind Router. Analyse the request and output ONLY valid JSON, nothing else.
 
 Tiers:
@@ -162,9 +156,7 @@ export class QwenRouter {
       // Modelfile's PARAMETER directives (temperature 0.1, num_predict 1024) so
       // decoding behavior stays consistent between the Modelfile and the call.
       const result = await generateText({
-        model: ollama(ROUTER_MODEL_ID, {
-          baseURL: process.env.OLLAMA_BASE_URL || 'http://localhost:11434'
-        }),
+        model: ollama(ROUTER_MODEL_ID),
         prompt: buildUserPrompt(prompt, context?.category),
         temperature: 0.1,
         maxOutputTokens: 1024,
@@ -199,5 +191,5 @@ export class QwenRouter {
 // Singleton — shared across all requests
 export const qwenRouter = new QwenRouter()
 
-// Re-export RouterDecision so callers don't need two imports
+// Re-export RouterDecisionso callers don't need two imports
 export type { RouterDecision }

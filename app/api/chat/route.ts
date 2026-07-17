@@ -369,13 +369,12 @@ export async function POST(req: Request) {
         model: fireworks(finalModelId),
         system: systemPrompt,
         messages: coreMessages as any,
-        maxTokens: maxOutputTokens + 256,
         temperature,
       })
       
       const latencyMs = Date.now() - inferenceStart
-      const tokensIn = result.usage.promptTokens ?? Math.ceil(compressedPrompt.length / 4)
-      const tokensOut = result.usage.completionTokens ?? Math.ceil(result.text.length / 4)
+      const tokensIn = Math.ceil(compressedPrompt.length / 4)
+      const tokensOut = Math.ceil(result.text.length / 4)
       const actualCost = estimateCost(1, tokensIn, tokensOut)
 
       // Apply response compression for additional token savings
@@ -456,7 +455,6 @@ export async function POST(req: Request) {
             model: fireworks(draftModel.id),
             system: `You are RouteMind. Draft a concise initial response. IMPORTANT: You have a strict output limit of approximately ${Math.floor(Math.min(maxOutputTokens, 256) * 0.75)} words. Be extremely concise - remove filler words, unnecessary explanations, and redundant phrases. For code: provide only the essential code with minimal comments. You must summarize your answer and gracefully finish your thought before hitting this limit. Do not trail off.`,
             messages: coreMessages as any,
-            maxTokens: Math.min(maxOutputTokens, 256) + 128, // Physical buffer for graceful stop
             temperature: 0.2,
           })
 
@@ -472,8 +470,8 @@ export async function POST(req: Request) {
             return {
               text: draftResponse.text,
               usage: {
-                inputTokens: draftResponse.usage.promptTokens,
-                outputTokens: draftResponse.usage.completionTokens
+                inputTokens: Math.ceil(compressedPrompt.length / 4),
+                outputTokens: Math.ceil(draftResponse.text.length / 4)
               },
               finishReason: 'stop'
             }
@@ -526,7 +524,6 @@ export async function POST(req: Request) {
             model: fireworks(finalModelId),
             system: `You are RouteMind, a helpful, concise assistant. Answer clearly and directly, without filler or repetition. Always respond in English. IMPORTANT: You have a strict output limit of approximately ${Math.floor(tier2MaxOutputTokens * 0.75)} words. Be extremely concise - remove filler words, unnecessary explanations, and redundant phrases. For code: provide only the essential code with minimal comments. You must summarize your answer and gracefully finish your thought before hitting this limit. Do not trail off mid-sentence.`,
             messages: tier2Messages as any,
-            maxTokens: tier2MaxOutputTokens + 256, // Physical buffer for graceful stop
             temperature,
             stopSequences: economyEngine.pickStopSequences(routerDecision.intent),
           })
@@ -677,7 +674,7 @@ export async function POST(req: Request) {
       maxOutputTokens,
       temperature,
       draftConfidence: draftConfidenceScore,
-      draftAccepted: selectedTier === 1 && draftConfidenceScore !== undefined && draftConfidenceScore >= DRAFT_ACCURACY_GATE_THRESHOLD,
+      draftAccepted: (selectedTier as number) === 1 && draftConfidenceScore !== undefined && draftConfidenceScore >= DRAFT_ACCURACY_GATE_THRESHOLD,
       draftReusedAsSeed: Boolean(draftSeedText),
     }
 

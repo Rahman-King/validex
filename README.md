@@ -171,6 +171,7 @@ docker run -d \
 - `services/bohr-service.py`: Bohrium API microservice for scientific verification
 - `app/api/chat/route.ts`: Main API endpoint
 - `app/api/verify/route.ts`: Verification API endpoint
+- `app/api/optimize/route.ts`: Prompt optimization API endpoint
 
 ## API Usage
 
