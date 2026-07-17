@@ -18,6 +18,14 @@ export function SiteHeader() {
             Optimize
           </Button>
           <Button
+            variant="ghost"
+            nativeButton={false}
+            className="rounded-full px-4"
+            render={<Link href="/verify-output" />}
+          >
+            Verify
+          </Button>
+          <Button
             variant="hero"
             nativeButton={false}
             className="press group rounded-full px-4 transition-shadow hover:shadow-glow-sm"
