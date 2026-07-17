@@ -23,13 +23,13 @@ export function Logo({
 
   const content = (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <div className="relative shrink-0">
+      <div className="relative shrink-0 overflow-hidden rounded-full">
         <Image 
           src="/apple-icon.png" 
           alt="Validex Logo" 
           width={icon} 
           height={icon}
-          className="rounded-full"
+          className="object-cover"
         />
       </div>
       {!iconOnly && (
