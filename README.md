@@ -1,6 +1,10 @@
 # Validex - Intelligent AI Verification System
 
+[![Built with Paritok](https://img.shields.io/badge/Built%20with-Paritok-1f2d3d)](https://github.com/Paritok-official/paritok-4b-v1)
+
 A multi-tier AI routing and verification system with suggestion-based verification architecture. Uses multiple AI models (Bohr, Gemini, local Ollama) to provide comprehensive data verification and validation.
+
+Built with [Paritok](https://github.com/Paritok-official/paritok-4b-v1) for token-efficient AI operations.
 
 ## Features
 
@@ -39,6 +43,7 @@ A multi-tier AI routing and verification system with suggestion-based verificati
 - Ollama with Qwen2.5:0.5b model ([Install Ollama](https://ollama.com/))
 - Python 3.8+ (for Bohr microservice)
 - Docker (for containerized deployment)
+- Paritok for token optimization ([Get started](https://github.com/Paritok-official/paritok-4b-v1))
 
 ## Installation
 
@@ -66,6 +71,16 @@ ollama pull llama3:8b
 cd services
 pip install -r requirements.txt
 cd ..
+
+# Set up Paritok for token optimization (optional but recommended)
+# Option A: Self-host with Ollama
+pip install "paritok[proxy]"
+ollama pull paritok/paritok-4b-v1
+ollama cp paritok/paritok-4b-v1 paritok-4b-v1
+paritok up
+
+# Option B: Use Paritok's hosted GPU server (requires API key from paritok.com)
+# Set PARITOK_USE_GPU_SERVER=true and PARITOK_API_KEY in your .env file
 ```
 
 ## Development
@@ -237,4 +252,4 @@ curl -X POST http://localhost:3000/api/verify \
 
 ## License
 
-MIT
+Apache License 2.0 - see [LICENSE](LICENSE) file for details

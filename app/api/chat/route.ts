@@ -11,6 +11,7 @@ import { routingDecisionEngine } from "@/lib/routing/decision-engine"
 import { getModelByTier, getBestModelForTier, getModelById, estimateCost, estimateLatency } from "@/lib/models/registry"
 import { learningEngine } from "@/lib/learning"
 import { retryHandler, rateLimiter, monitoring, circuitBreaker } from "@/lib/production"
+import { paritokIntegration } from "@/lib/optimization/paritok-integration"
 export const runtime = "nodejs"
 export const maxDuration = 60
 
